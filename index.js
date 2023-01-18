@@ -19,7 +19,7 @@ app.use(morgan("dev"));
 app.use(helmet());
 
 //ROUTES
-app.use("/api/user", userRoutes);
+app.use("/api/users", userRoutes);
 app.use("/api/auth", authRoutes);
 
 const PORT = 8080 || process.env.PORT;
