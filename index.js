@@ -5,6 +5,7 @@ const morgan = require("morgan");
 const helmet = require("helmet");
 const userRoutes = require("./routes/users");
 const authRoutes = require("./routes/auth");
+const postRoutes = require("./routes/posts");
 
 require("dotenv").config();
 
@@ -21,6 +22,7 @@ app.use(helmet());
 //ROUTES
 app.use("/api/users", userRoutes);
 app.use("/api/auth", authRoutes);
+app.use("/api/posts", postRoutes);
 
 const PORT = 8080 || process.env.PORT;
 
