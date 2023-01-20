@@ -13,6 +13,21 @@ router.post("/", async (req, res) => {
 });
 
 //UPDATE A POST
+router.put("/:id", async (req, res) => {
+  try {
+    console.log(req.params);
+    const currentPost = await Post.findById(req.params.id);
+    console.log(currentPost);
+    if (currentPost.userId === req.body.userId) {
+      await currentPost.updateOne({ $set: req.body });
+      res.status(200).json("You have successfully updated your Post");
+    } else {
+      res.status(403).json("You can update your post only.");
+    }
+  } catch (error) {
+    res.status(500).json(error.message);
+  }
+});
 //DELETE A POST
 //LOKE A POST
 //GET A POST
