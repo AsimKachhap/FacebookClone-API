@@ -1,4 +1,5 @@
 const router = require("express").Router();
+const { findById } = require("../models/Post");
 const Post = require("../models/Post");
 
 //CREATE A POST
@@ -45,7 +46,23 @@ router.delete("/:id", async (req, res) => {
     res.status(500).json(error.message);
   }
 });
-//LIKE A POST
+
+//LIKE OR DISLIKE A POST
+router.put("/:id/like", async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.id);
+    if (!post.likes.includes(req.body.userId)) {
+      await post.update({ $push: { likes: req.body.userId } });
+      res.status(200).json("You have liked the post.");
+    } else {
+      await post.update({ $pull: { likes: req.body.userId } });
+      res.status(200).json("You have disliked the post.");
+    }
+  } catch (error) {
+    res.status(500).json(error.message);
+  }
+});
+
 //GET A POST
 //GET TIMELINE POSTS
 
